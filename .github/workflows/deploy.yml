@@ -23,6 +23,8 @@ jobs:
            cd ~/smsdiary_react
            git checkout master
            git pull
-           npm run restart
+           npm i
+           pm2 restart all
+           
                 
     
