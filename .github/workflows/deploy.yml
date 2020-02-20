@@ -1,0 +1,28 @@
+name: deploy
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+     - name: logging into server, updating code, restarting server
+       uses: appleboy/ssh-action@master
+       with:
+         key: ${{ secrets.SSH_KEY }}
+         passphrase: ${{ secrets.SSH_PASSPHRASE }}
+         user: ${{ secrets.USER }}
+         host: ${{ secrets.HOST }}
+         port: ${{ secrets.PORT }}
+         script: |
+           cd ~/smsdiary_react
+           git checkout master
+           git pull
+           npm run restart
+                
+    
