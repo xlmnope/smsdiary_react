@@ -12,7 +12,7 @@ jobs:
 
     steps:
      - name: logging into server, updating code, restarting server
-       uses: appleboy/ssh-action@master
+       uses: appleboy/ssh-action@0.0.7
        with:
          key: ${{ secrets.SSH_KEY }}
          passphrase: ${{ secrets.SSH_PASSPHRASE }}
