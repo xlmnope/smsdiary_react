@@ -12,7 +12,7 @@ export default class EntryCard extends React.Component {
 
   componentDidMount() {
     
-      axios.get('http://localhost:1337/messages')
+      axios.get('https://journal.lisagiroud.com/api/messages')
       .then((response) => {
         // handle success
         console.log('response ', response);
