@@ -24,6 +24,6 @@ jobs:
            git checkout master
            git pull
            npm i
-           npm build
+           npm run build
            pm2 restart all
            
