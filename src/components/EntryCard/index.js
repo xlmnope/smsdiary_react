@@ -5,6 +5,8 @@ import "./style.css";
 import axios from 'axios';
 const dayjs = require('dayjs');
 
+require('dotenv').config();
+
 export default class EntryCard extends React.Component {
   state = {
     messages: []
@@ -12,7 +14,7 @@ export default class EntryCard extends React.Component {
 
   componentDidMount() {
     
-      axios.get('https://journal.lisagiroud.com/api/messages')
+      axios.get(process.env.REACT_APP_API_DOMAIN + '/messages')
       .then((response) => {
         // handle success
         console.log('response ', response);
