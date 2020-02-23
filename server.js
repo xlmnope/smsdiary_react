@@ -29,7 +29,7 @@ const app = express();
 app.use(urlencoded({ extended: false }));
 
 app.post('/sms', (req, res) => {
-   //console.log('body: ', req.body);
+  //console.log('body: ', req.body);
   // console.log('from: ', req.body.From);
   let sender = req.body.From;
   let message = req.body.Body;
@@ -51,42 +51,53 @@ http.createServer(app).listen(1337, () => {
 function showMessages(){
   var prom = new Promise(function(resolve, reject){
     connection.query("SELECT * from messages;", function(err, res) {
-    
+      
       if (err) reject(err);
       console.log("res, ", res);
-      // var messages = []; 
-      // for (var i = 0; i < res.length; i++) {
-      //   messages.push(res[i].body);
-        
-      //   }
-        //console.log('messages in the showMessages function', messages);
-        //resolve(messages);
-        resolve(res)
-      });
+      
+      resolve(res)
+    });
   });
   return prom;
 };
-  
-  app.get('/messages', cors(), function (req, res, next) {
-    showMessages().then(function(response){
-      var messages = response;
-      console.log('messages in the get request: ', messages);
-      res.json(messages);
-    });
 
+app.get('/messages', cors(), function (req, res, next) {
+  showMessages().then(function(response){
+    var messages = response;
+    console.log('messages in the get request: ', messages);
+    res.json(messages);
   });
   
+});
+
+
+
+
+function saveMessage(sender, message) {
+  console.log('saveMessagesfunction', sender, message);
+  let sql = `INSERT INTO messages(sender,body) VALUES ?`;
+  let values = [
+    [sender, message]
+  ];
+  connection.query(sql, [values]);
   
+  //showMessages();
   
-  
-  function saveMessage(sender, message) {
-    console.log('saveMessagesfunction', sender, message);
-    let sql = `INSERT INTO messages(sender,body) VALUES ?`;
-    let values = [
-      [sender, message]
-    ];
-    connection.query(sql, [values]);
+}
+
+app.options('/message/:id', cors())
+app.delete('/message/:id', cors({
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}), function (req, res) {
+  console.log(req.body);
+  connection.query('DELETE FROM `messages` WHERE `id`=?', [req.params.id], function (error, results, fields) {
+    if (error) throw error;
+    else{
+      res.end('Record has been deleted!');
+      
+    }
     
-    //showMessages();
-    
-  }
+  });
+});
+

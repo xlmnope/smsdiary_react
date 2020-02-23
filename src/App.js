@@ -9,33 +9,12 @@ import LeftNav from "./components/LeftNav";
 //////
 
 class App extends Component {
-  // Setting this.state.messages to the messages json array
-  //trying to change this.state.messages to array, then have get request 
-  // state = {
-  //   messages: []
-  // };
-
-
-  // componentDidMount() {
-  //   console.log('didmount');
-    
-  //   axios.get(`http://localhost:1337/messages`)
-  //     .then(res => {
-  //       console.log('res: ', res);
-  //       const messages = res.data;
-  //       this.setState({ messages });
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-    
-  // }
-  // Map over this.state.messages and render a card component for each message object
-
+   deleteForever = () => {
+    console.log("deleteforever function");
+   
+  }
   render() {
     
-    // console.log('state.messages: ' + this.state.messages);
-    // console.log('this.state ', this.state);
     return (
 
       <div className="container-fluid">
@@ -54,12 +33,12 @@ class App extends Component {
               </div>
             </div>
 
-            {/* {this.state.messages.map(message => ( */}
               <EntryCard
-                
-              />
+                deleteForever={this.deleteForever}
+              >
+                </EntryCard>
 
-            {/* ))} */}
+          
           </main>
         </div>
       </div>
